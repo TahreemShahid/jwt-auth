@@ -13,6 +13,7 @@ This project demonstrates a complete JWT (JSON Web Token) authentication flow us
   - [Frontend Setup](#frontend-setup)
 - [Authentication Flow](#authentication-flow)
 - [Scripts](#scripts)
+- [Best Practices](#best-practices)
 - [License](#license)
 
 ---
@@ -32,14 +33,51 @@ This project demonstrates a complete JWT (JSON Web Token) authentication flow us
 ```
 root/
 │
-├── jwt-auth-frontend/   # React frontend
-│   └── ...              # (see below for setup)
+├── jwt-auth-frontend/                # React frontend
+│   ├── public/                       # Static assets and HTML template
+│   │   ├── favicon.ico
+│   │   ├── index.html
+│   │   ├── logo192.png
+│   │   ├── logo512.png
+│   │   ├── manifest.json
+│   │   └── robots.txt
+│   ├── src/                          # React source code
+│   │   ├── App.css
+│   │   ├── App.js
+│   │   ├── App.test.js
+│   │   ├── index.css
+│   │   ├── index.js
+│   │   ├── logo.svg
+│   │   ├── reportWebVitals.js
+│   │   ├── service-worker.js
+│   │   ├── serviceWorkerRegistration.js
+│   │   └── setupTests.js
+│   ├── .env.example                  # Example environment variables
+│   ├── .gitignore                    # Ignore node_modules, build, etc.
+│   ├── package.json                  # Frontend dependencies and scripts
+│   ├── package-lock.json             # Frontend lockfile
+│   └── README.md                     # Frontend documentation (optional)
 │
-├── jwt-auth-backend/    # Node.js/Express backend
-│   └── ...              # (see below for setup)
+├── jwt-auth-backend/                 # Node.js/Express backend
+│   ├── src/                          # Backend source code
+│   │   ├── routes/                   # API route definitions
+│   │   ├── controllers/              # Route handler logic
+│   │   ├── models/                   # Database models/schemas
+│   │   └── app.js                    # Express app entry point
+│   ├── .env.example                  # Example environment variables
+│   ├── .gitignore                    # Ignore node_modules, logs, etc.
+│   ├── package.json                  # Backend dependencies and scripts
+│   ├── package-lock.json             # Backend lockfile
+│   └── README.md                     # Backend documentation (optional)
 │
-└── README.md            # (this file)
+├── README.md                         # Combined project documentation
+└── .gitignore                        # Global ignores (optional)
 ```
+
+**Notes:**
+- Do NOT commit real `.env` files with secrets; use `.env.example` for templates.
+- Do NOT commit `node_modules/` or build/dist folders.
+- Add additional config files (e.g., `.eslintrc`, `.prettierrc`, `Dockerfile`) as needed.
 
 ---
 
@@ -58,12 +96,12 @@ root/
    ```
 
 3. **Configure environment variables:**
-   Create a `.env` file in `jwt-auth-backend/`:
-   ```
-   PORT=5000
-   JWT_SECRET=your_jwt_secret
-   MONGO_URI=your_mongodb_uri
-   ```
+   - Copy `.env.example` to `.env` and fill in your values:
+     ```
+     PORT=5000
+     JWT_SECRET=your_jwt_secret
+     MONGO_URI=your_mongodb_uri
+     ```
 
 4. **Start the backend server:**
    ```bash
@@ -86,7 +124,10 @@ root/
    ```
 
 3. **Configure API endpoint:**
-   - If your backend runs on a different host/port, update the API base URL in the frontend (commonly in a `.env` file or a config file).
+   - Copy `.env.example` to `.env` and set the backend API URL, e.g.:
+     ```
+     REACT_APP_API_URL=http://localhost:5000
+     ```
 
 4. **Start the frontend development server:**
    ```bash
@@ -113,6 +154,8 @@ root/
 ### Backend
 
 - `npm start` — Start backend server
+- `npm run dev` — Start backend with nodemon (if configured)
+- `npm test` — Run backend tests
 
 ### Frontend
 
@@ -122,12 +165,16 @@ root/
 
 ---
 
-## License
+## Best Practices
 
-MIT
+- Never commit real secrets or credentials to the repository.
+- Use HTTPS in production for secure JWT transmission.
+- Set proper CORS policies in the backend.
+- Use secure, httpOnly cookies for JWT storage if possible.
+- Validate and sanitize all user input.
 
 ---
 
-**Note:**  
-- Make sure both servers are running for full functionality.
-- Adjust CORS settings in the backend if accessing from different origins. 
+## License
+
+MIT 
